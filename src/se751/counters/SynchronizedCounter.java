@@ -1,4 +1,6 @@
-package se751;
+package se751.counters;
+
+import se751.Benchmark;
 
 /**
  * Author: Chris Morgan

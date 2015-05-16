@@ -1,5 +1,8 @@
 package se751;
 
+import se751.counters.AtomicCounter;
+import se751.counters.SynchronizedCounter;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
