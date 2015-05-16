@@ -1,4 +1,4 @@
-package com.company;
+package se751;
 
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;

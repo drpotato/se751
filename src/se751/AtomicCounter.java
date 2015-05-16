@@ -1,4 +1,4 @@
-package com.company;
+package se751;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
