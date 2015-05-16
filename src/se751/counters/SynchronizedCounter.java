@@ -1,23 +1,19 @@
 package se751.counters;
 
-import se751.Benchmark;
-
 /**
  * Author: Chris Morgan
  * Project: se751
  */
-public class SynchronizedCounter implements Runnable {
+public class SynchronizedCounter extends Counter {
 
     private int count = 0;
 
-    private synchronized void increment() {
-        count++;
+    @Override
+    int getCount() {
+        return count;
     }
 
-    @Override
-    public void run() {
-        while (count < Benchmark.WORK_SIZE) {
-         increment();
-        }
+    synchronized void increment() {
+        count++;
     }
 }
