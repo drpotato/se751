@@ -1,7 +1,6 @@
 package se751.syncronised_lists;
 
 import java.util.ArrayList;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -15,10 +14,12 @@ public class BenchmarkLists {
 
     // Methinks ExecutorService does some optimization.
     public static void main(String[] args) throws Exception{
-        list_classes.add(SynchronisedListAdd.class);
-        list_classes.add(SynchronisedListGet.class);
-        list_classes.add(SynchronisedListGetAndSet.class);
-
+        list_classes.add(SynchronisedListAdd_ConcurrentObject.class);
+        list_classes.add(SynchronisedListAddAndGet_ConcurrentObject.class);
+        list_classes.add(SynchronisedListGet_ConcurrentObject.class);
+        list_classes.add(SynchronisedListAdd_SynchronizedBlock.class);
+        list_classes.add(SynchronisedListGet_SynchronizedBlock.class);
+        list_classes.add(SynchronisedListAddAndGet_SynchronizedBlock.class);
 
         for (Class c : list_classes) {
 
@@ -29,13 +30,9 @@ public class BenchmarkLists {
 
             final long executerStartTime = System.currentTimeMillis();
 
-            try {
-                executorService.execute(runnable);
-                executorService.shutdown();
-                executorService.awaitTermination(1l, TimeUnit.MINUTES);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            executorService.execute(runnable);
+            executorService.shutdownNow();
+            executorService.awaitTermination(1l, TimeUnit.MINUTES);
 
             final long executerEndTime = System.currentTimeMillis();
             System.out.printf("Executor Time taken for  -  %dms\n", (executerStartTime - executerEndTime));

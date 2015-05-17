@@ -8,14 +8,14 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 /**
  * Created by hugobateman on 17/05/15.
  */
-public class SynchronisedListGet implements Runnable {
+public class SynchronisedListAddAndGet_ConcurrentObject implements Runnable {
 
     ConcurrentLinkedQueue<Integer> list = new ConcurrentLinkedQueue<>();
     private ArrayList<Integer> elements = new ArrayList(BenchmarkLists.WORK_SIZE);
     int operationCount = 0;
     Integer integer;
 
-    public SynchronisedListGet() {
+    public SynchronisedListAddAndGet_ConcurrentObject() {
         for (int i = 0; i < BenchmarkLists.WORK_SIZE; i++) {
             list.add(new Integer(i));
         }
