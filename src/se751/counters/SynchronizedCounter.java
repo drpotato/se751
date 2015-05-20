@@ -8,6 +8,10 @@ public class SynchronizedCounter extends Counter {
 
     private int count = 0;
 
+    public SynchronizedCounter(Integer workload) {
+        super(workload);
+    }
+
     @Override
     int getCount() {
         return count;

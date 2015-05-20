@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Benchmark {
 
-    public static final int WORK_SIZE = 100000000;
+    public static final int WORK_SIZE = 1000000;
 
     public static void main(String[] args) throws Exception {
 
@@ -24,7 +24,7 @@ public class Benchmark {
             for (int threadCount = 1; threadCount <= (processorCount * 2); threadCount++) {
 
                 // Reset the runnable and executorService for the benchmark.
-                runnable = runnableFactory.newRunnable(runnableType);
+                runnable = runnableFactory.newRunnable(runnableType, WORK_SIZE);
                 executorService = Executors.newFixedThreadPool(threadCount);
 
                 // Start timing and kick of threads.
@@ -35,7 +35,7 @@ public class Benchmark {
 
                 // Shutdown the threads and wait for them to finish.
                 executorService.shutdown();
-                executorService.awaitTermination(1l, TimeUnit.MINUTES);
+                executorService.awaitTermination(30l, TimeUnit.SECONDS);
                 final long endTime = System.currentTimeMillis();
                 System.out.printf("%d threads -  %dms\n", threadCount, (endTime - startTime));
             }
