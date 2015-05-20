@@ -12,6 +12,10 @@ public class FairLockedCounter extends Counter {
     private int count = 0;
     private Lock lock = new ReentrantLock(true);
 
+    public FairLockedCounter(Integer workload) {
+        super(workload);
+    }
+
     @Override
     int getCount() {
         return count;
@@ -22,5 +26,6 @@ public class FairLockedCounter extends Counter {
         lock.lock();
         count++;
         lock.unlock();
+
     }
 }

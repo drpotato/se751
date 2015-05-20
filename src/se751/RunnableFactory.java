@@ -4,6 +4,8 @@ import se751.counters.AtomicCounter;
 import se751.counters.FairLockedCounter;
 import se751.counters.SynchronizedCounter;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -30,8 +32,10 @@ public class RunnableFactory {
         return runnables.keySet();
     }
 
-    public Runnable newRunnable(String runnableType) throws InstantiationException, IllegalAccessException {
-        return (Runnable) runnables.get(runnableType).newInstance();
+    public Runnable newRunnable(String runnableType, Integer workload) throws InstantiationException,
+            IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        Constructor runnableConstructor = runnables.get(runnableType).getConstructor(Integer.class);
+        return (Runnable) runnableConstructor.newInstance(workload);
     }
 
 }
