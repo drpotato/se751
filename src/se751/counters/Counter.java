@@ -12,11 +12,13 @@ public abstract class Counter implements Runnable {
         this.workload = workload;
     }
 
+    abstract void resetCount();
     abstract void increment();
     abstract int getCount();
 
     @Override
     public void run() {
+        resetCount();
         while (getCount() < workload) {
             increment();
         }

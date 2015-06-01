@@ -7,12 +7,12 @@ import java.util.concurrent.locks.ReentrantLock;
  * Author: Chris Morgan
  * Project: se751
  */
-public class FairLockedCounter extends Counter {
+public class UnfairLockedCounter extends Counter {
 
     private static int count = 0;
-    private Lock lock = new ReentrantLock(true);
+    private Lock lock = new ReentrantLock();
 
-    public FairLockedCounter(Integer workload) {
+    public UnfairLockedCounter(Integer workload) {
         super(workload);
     }
 
@@ -33,4 +33,5 @@ public class FairLockedCounter extends Counter {
         lock.unlock();
 
     }
+
 }

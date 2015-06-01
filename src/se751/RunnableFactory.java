@@ -1,9 +1,5 @@
 package se751;
 
-import se751.counters.AtomicCounter;
-import se751.counters.FairLockedCounter;
-import se751.counters.SynchronizedCounter;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -18,13 +14,7 @@ public class RunnableFactory {
 
     private Map<String, Class> runnables = new HashMap<String, Class>();
 
-    public RunnableFactory() {
-        mapRunnable(AtomicCounter.class);
-        mapRunnable(SynchronizedCounter.class);
-        mapRunnable(FairLockedCounter.class);
-    }
-
-    private void mapRunnable(Class runnable) {
+    public void mapRunnable(Class runnable) {
         runnables.put(runnable.getSimpleName(), runnable);
     }
 

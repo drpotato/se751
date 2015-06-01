@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class AtomicCounter extends Counter {
 
-    private AtomicInteger atomicInteger = new AtomicInteger(0);
+    private static AtomicInteger atomicInteger = new AtomicInteger(0);
 
     public AtomicCounter(Integer workload) {
         super(workload);
@@ -17,6 +17,11 @@ public class AtomicCounter extends Counter {
     @Override
     void increment() {
         atomicInteger.getAndIncrement();
+    }
+
+    @Override
+    void resetCount() {
+        atomicInteger.set(0);
     }
 
     @Override
