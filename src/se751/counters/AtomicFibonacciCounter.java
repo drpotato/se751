@@ -22,6 +22,6 @@ public class AtomicFibonacciCounter extends FibonacciCounter{
 
     @Override
     boolean checkDone() {
-        return this.index.get() == this.workload;
+        return this.index.get() >= this.workload;
     }
 }

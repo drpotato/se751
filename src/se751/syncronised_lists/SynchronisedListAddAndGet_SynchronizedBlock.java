@@ -2,36 +2,47 @@ package se751.syncronised_lists;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by hugobateman on 18/05/15.
  */
-public class SynchronisedListAddAndGet_SynchronizedBlock implements Runnable {
+public class SynchronisedListAddAndGet_SynchronizedBlock extends SynchronisedList {
 
     private Queue<Integer> list = new LinkedList<>();
-    private ArrayList<Integer> elements = new ArrayList(BenchmarkLists.WORK_SIZE);
+    private List<Integer> elements;
+    AtomicInteger operationCount = new AtomicInteger(0);
     Integer integer;
-    Object lock = new Object();
+    final Object lock = new Object();
 
-    public SynchronisedListAddAndGet_SynchronizedBlock() {
-        for (int i = 0; i < BenchmarkLists.WORK_SIZE; i++) {
-            list.add(new Integer(i));
-        }
-        for (int i = 0; i < BenchmarkLists.WORK_SIZE; i++) {
-            elements.add(new Integer(i));
+    public SynchronisedListAddAndGet_SynchronizedBlock(Integer workload) {
+        super(workload);
+
+        elements = new ArrayList<>(workload);
+
+        for (int i = 0; i < workload; i++) {
+            list.add(i);
+            elements.add(i);
         }
     }
 
-    public void run() {
-        for (int i = 0; i < BenchmarkLists.WORK_SIZE; i++) {
+    @Override
+    protected boolean doWork() {
+        int operationCount = this.operationCount.getAndIncrement();
+        if (operationCount < this.workload) {
             synchronized (lock) {
-                if ((i % 2) == 0) {
-                    list.add(elements.get(i));
+
+                if ((operationCount % 2) == 0) {
+                    list.add(elements.get(operationCount));
                 } else {
                     integer = list.poll();
                 }
             }
+            return true;
         }
+        return false;
     }
+
 }

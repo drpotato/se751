@@ -2,29 +2,42 @@ package se751.syncronised_lists;
 
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by hugobateman on 16/05/15.
  */
-public class SynchronisedListAdd_ConcurrentObject implements Runnable {
+public class SynchronisedListAdd_ConcurrentObject extends SynchronisedList {
 
-    private Integer workload;
+    ConcurrentLinkedQueue<Integer> list = new ConcurrentLinkedQueue<>();
+    private ArrayList<Integer> elements;
 
-    private ConcurrentLinkedQueue<Integer> list = new ConcurrentLinkedQueue<>();
-    private ArrayList<Integer> elements = new ArrayList<Integer>();
-    int addCount = 0;
+    AtomicInteger operationCount = new AtomicInteger(0);
 
     public SynchronisedListAdd_ConcurrentObject(Integer workload) {
+        super(workload);
+
         this.workload = workload;
-        for (int i = 0; i < this.workload; i++) {
+        this.elements = new ArrayList<>(workload);
+
+        for (int i = 0; i < workload; i++) {
+            list.add(i);
+        }
+        for (int i = 0; i < workload; i++) {
             elements.add(i);
         }
     }
 
-    public void run() {
-        while (addCount < this.workload) {
-            list.add(elements.get(addCount));
-            addCount++;
+    @Override
+    protected boolean doWork() {
+
+        int operationCount = this.operationCount.getAndIncrement();
+
+        if (operationCount < this.workload) {
+            list.add(elements.get(operationCount));
+            return true;
         }
+        return false;
     }
+
 }
