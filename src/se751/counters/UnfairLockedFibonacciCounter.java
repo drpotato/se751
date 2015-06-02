@@ -1,5 +1,8 @@
 package se751.counters;
 
+import se751.BenchmarkTaskAdapter;
+import se751.Fibonacci;
+
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -7,7 +10,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * Author: Chris Morgan
  * Project: se751
  */
-public class UnfairLockedFibonacciCounter extends FibonacciCounter {
+public class UnfairLockedFibonacciCounter extends BenchmarkTaskAdapter {
 
     private int count = 0;
 
@@ -35,7 +38,7 @@ public class UnfairLockedFibonacciCounter extends FibonacciCounter {
     protected boolean doWork() {
         int index = getAndIncrementIndex();
         if (index < this.workload) {
-            this.addCount(fibonacci(index));
+            this.addCount(Fibonacci.calculate(index));
             return true;
         }
         return false;

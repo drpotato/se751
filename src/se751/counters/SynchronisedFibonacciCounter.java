@@ -1,10 +1,13 @@
 package se751.counters;
 
+import se751.BenchmarkTaskAdapter;
+import se751.Fibonacci;
+
 /**
  * Author: Chris Morgan
  * Project: se751
  */
-public class SynchronisedFibonacciCounter extends FibonacciCounter {
+public class SynchronisedFibonacciCounter extends BenchmarkTaskAdapter {
 
     int count = 0;
     int index = 1;
@@ -27,7 +30,7 @@ public class SynchronisedFibonacciCounter extends FibonacciCounter {
     protected boolean doWork() {
         int index = this.getAndIncrementIndex();
         if (index < this.workload) {
-            this.addCount(fibonacci(index));
+            this.addCount(Fibonacci.calculate(index));
             return true;
         }
 

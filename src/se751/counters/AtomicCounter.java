@@ -15,17 +15,12 @@ public class AtomicCounter extends Counter {
     }
 
     @Override
-    void increment() {
+    protected void increment() {
         atomicInteger.getAndIncrement();
     }
 
     @Override
-    void resetCount() {
-        atomicInteger.set(0);
-    }
-
-    @Override
-    int getCount() {
+    protected int getCount() {
         return atomicInteger.get();
     }
 }

@@ -1,5 +1,8 @@
 package se751.counters;
 
+import se751.BenchmarkTaskAdapter;
+import se751.Fibonacci;
+
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicIntegerArray;
 
@@ -7,7 +10,7 @@ import java.util.concurrent.atomic.AtomicIntegerArray;
  * Author: Chris Morgan
  * Project: se751
  */
-public class AtomicFibonacciArray extends FibonacciCounter {
+public class AtomicFibonacciArray extends BenchmarkTaskAdapter {
 
     AtomicInteger index = new AtomicInteger(0);
     AtomicIntegerArray results;
@@ -21,7 +24,7 @@ public class AtomicFibonacciArray extends FibonacciCounter {
     protected boolean doWork() {
         int index = this.index.getAndIncrement();
         if (index < this.workload){
-            this.results.set(index, fibonacci(index));
+            this.results.set(index, Fibonacci.calculate(index));
             return true;
         }
         return false;

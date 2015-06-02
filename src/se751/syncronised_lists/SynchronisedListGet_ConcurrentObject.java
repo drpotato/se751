@@ -1,11 +1,13 @@
 package se751.syncronised_lists;
 
+import se751.BenchmarkTaskAdapter;
+
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Created by hugobateman on 18/05/15.
  */
-public class SynchronisedListGet_ConcurrentObject extends SynchronisedList {
+public class SynchronisedListGet_ConcurrentObject extends BenchmarkTaskAdapter {
 
     ConcurrentLinkedQueue<Integer> list = new ConcurrentLinkedQueue<>();
     Integer integer;

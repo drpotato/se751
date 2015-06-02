@@ -17,17 +17,12 @@ public class UnfairLockedCounter extends Counter {
     }
 
     @Override
-    void resetCount() {
-        count = 0;
-    }
-
-    @Override
-    int getCount() {
+    protected int getCount() {
         return count;
     }
 
     @Override
-    void increment() {
+    protected void increment() {
         lock.lock();
         count++;
         lock.unlock();

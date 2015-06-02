@@ -13,16 +13,11 @@ public class SynchronisedCounter extends Counter {
     }
 
     @Override
-    int getCount() {
+    protected int getCount() {
         return count;
     }
 
-    @Override
-    void resetCount() {
-        count = 0;
-    }
-
-    synchronized void increment() {
+    synchronized protected void increment() {
         count++;
     }
 }

@@ -1,5 +1,7 @@
 package se751.syncronised_lists;
 
+import se751.BenchmarkTaskAdapter;
+
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -7,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by hugobateman on 16/05/15.
  */
-public class SynchronisedListAdd_ConcurrentObject extends SynchronisedList {
+public class SynchronisedListAdd_ConcurrentObject extends BenchmarkTaskAdapter {
 
     ConcurrentLinkedQueue<Integer> list = new ConcurrentLinkedQueue<>();
     private ArrayList<Integer> elements;
