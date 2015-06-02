@@ -12,14 +12,14 @@ public abstract class FibonacciCounter implements Runnable {
         this.workload = workload;
     }
 
-    abstract void doWork();
-    abstract boolean checkDone();
+    abstract protected boolean doWork();
 
     @Override
     public void run() {
-        while (!checkDone()) {
-            doWork();
-        }
+        boolean result;
+        do {
+            result = doWork();
+        } while (result);
     }
 
     public static int fibonacci(int num) {
@@ -34,17 +34,6 @@ public abstract class FibonacciCounter implements Runnable {
             fibPrev = temp;
         }
         return fib;
-    }
-
-    public int[] rangeFromWorkload(int workload) {
-        int start = 1;
-        int stop = workload + 1;
-        int[] result = new int[stop - start];
-
-        for(int i = 0; i < stop - start; i++) {
-            result[i] = start + i;
-        }
-        return result;
     }
 
 }

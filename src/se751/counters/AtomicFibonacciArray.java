@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicIntegerArray;
  * Author: Chris Morgan
  * Project: se751
  */
-public class AtomicFibonacciArray extends FibonacciCounter{
+public class AtomicFibonacciArray extends FibonacciCounter {
 
     AtomicInteger index = new AtomicInteger(0);
     AtomicIntegerArray results;
@@ -18,15 +18,13 @@ public class AtomicFibonacciArray extends FibonacciCounter{
     }
 
     @Override
-    void doWork() {
+    protected boolean doWork() {
         int index = this.index.getAndIncrement();
-        if (index < workload){
+        if (index < this.workload){
             this.results.set(index, fibonacci(index));
+            return true;
         }
+        return false;
     }
 
-    @Override
-    boolean checkDone() {
-        return this.index.get() >= this.workload;
-    }
 }

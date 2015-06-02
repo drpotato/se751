@@ -13,8 +13,10 @@ public class SynchronisedFibonacciCounter extends FibonacciCounter {
         super(workload);
     }
 
-    synchronized void incrementIndex() {
+    synchronized int getAndIncrementIndex() {
+        int tempIndex = this.index;
         this.index++;
+        return tempIndex;
     }
 
     synchronized void addCount(int num) {
@@ -22,14 +24,13 @@ public class SynchronisedFibonacciCounter extends FibonacciCounter {
     }
 
     @Override
-    void doWork() {
-        int index = this.index;
-        incrementIndex();
-        this.addCount(this.fibonacci(index));
-    }
+    protected boolean doWork() {
+        int index = this.getAndIncrementIndex();
+        if (index < this.workload) {
+            this.addCount(fibonacci(index));
+            return true;
+        }
 
-    @Override
-    boolean checkDone() {
-        return this.index >= this.workload + 1;
+        return false;
     }
 }

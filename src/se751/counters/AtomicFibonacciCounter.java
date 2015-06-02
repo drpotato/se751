@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Author: Chris Morgan
  * Project: se751
  */
-public class AtomicFibonacciCounter extends FibonacciCounter{
+public class AtomicFibonacciCounter extends FibonacciCounter {
 
     AtomicInteger count = new AtomicInteger(0);
     AtomicInteger index = new AtomicInteger(1);
@@ -16,12 +16,13 @@ public class AtomicFibonacciCounter extends FibonacciCounter{
     }
 
     @Override
-    void doWork() {
-        this.count.getAndAdd(fibonacci(this.index.getAndIncrement()));
+    protected boolean doWork() {
+        int index = this.index.getAndIncrement();
+        if (index < this.workload) {
+            this.count.getAndAdd(fibonacci(index));
+            return true;
+        }
+        return false;
     }
 
-    @Override
-    boolean checkDone() {
-        return this.index.get() >= this.workload;
-    }
 }

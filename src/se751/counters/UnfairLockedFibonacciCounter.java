@@ -17,10 +17,12 @@ public class UnfairLockedFibonacciCounter extends FibonacciCounter {
         super(workload);
     }
 
-    void incrementIndex() {
+    int getAndIncrementIndex() {
         this.lock.lock();
+        int tempIndex = index;
         this.index++;
         this.lock.unlock();
+        return tempIndex;
     }
 
     void addCount(int num) {
@@ -30,14 +32,13 @@ public class UnfairLockedFibonacciCounter extends FibonacciCounter {
     }
 
     @Override
-    void doWork() {
-        int index = this.index;
-        incrementIndex();
-        this.addCount(this.fibonacci(index));
+    protected boolean doWork() {
+        int index = getAndIncrementIndex();
+        if (index < this.workload) {
+            this.addCount(fibonacci(index));
+            return true;
+        }
+        return false;
     }
 
-    @Override
-    boolean checkDone() {
-        return this.index >= this.workload + 1;
-    }
 }
